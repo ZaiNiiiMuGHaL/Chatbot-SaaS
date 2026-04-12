@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatBot Widget</title>
+    <style>
+        /* Chat bubble button */
+        #chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #4F46E5;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        /* Chat window */
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        /* Chat header */
+        #chat-header {
+            background: #4F46E5;
+            color: white;
+            padding: 16px;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Chat messages area */
+        #chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        /* Individual message */
+        .message {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            background: #4F46E5;
+            color: white;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: #E5E7EB;
+            color: #111;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        /* Chat input area */
+        #chat-input-area {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #eee;
+            background: white;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        #send-btn {
+            margin-left: 8px;
+            padding: 10px 16px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #send-btn:hover {
+            background: #4338CA;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Chat Bubble Button -->
+<div id="chat-bubble" onclick="toggleChat()">💬</div>
+
+<!-- Chat Window -->
+<div id="chat-window">
+    <div id="chat-header">🤖 Zain Pizza Shop Support</div>
+    <div id="chat-messages">
+        <div class="message bot-message">Hi! How can I help you today? 😊</div>
+    </div>
+    <div id="chat-input-area">
+        <input id="chat-input" type="text" placeholder="Type a message..." 
+               onkeypress="if(event.key==='Enter') sendMessage()"/>
+        <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const BUSINESS_ID = 3; // Your business ID
+    const API_URL = "http://127.0.0.1:8000";
+
+    function toggleChat() {
+        const window = document.getElementById("chat-window");
+        window.style.display = window.style.display === "flex" ? "none" : "flex";
+    }
+
+    function addMessage(text, isUser) {
+        const messages = document.getElementById("chat-messages");
+        const div = document.createElement("div");
+        div.className = "message " + (isUser ? "user-message" : "bot-message");
+        div.innerText = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const message = input.value.trim();
+        if (!message) return;
+
+        addMessage(message, true);
+        input.value = "";
+
+        try {
+            const response = await fetch(`${API_URL}/chat`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    business_id: BUSINESS_ID,
+                    user_message: message
+                })
+            });
+            const data = await response.json();
+            addMessage(data.bot_reply, false);
+        } catch (error) {
+            addMessage("Sorry, something went wrong!", false);
+        }
+    }
+</script>
+
+</body>
+</html>
