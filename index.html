@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot SaaS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0F0F1A;
+            color: white;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6366F1;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 15px;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover { opacity: 1; }
+
+        .nav-btn {
+            background: #6366F1;
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 8px;
+            opacity: 1 !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(ellipse at top, #1a1a3e 0%, #0F0F1A 70%);
+        }
+
+        .hero-badge {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid #6366F1;
+            color: #6366F1;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #6366F1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.7;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            background: #6366F1;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #4F46E5;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 60px;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #6366F1;
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            opacity: 0.6;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 60px;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .pricing h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.3s;
+        }
+
+        .pricing-card.popular {
+            border-color: #6366F1;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .popular-badge {
+            background: #6366F1;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .pricing-card h3 {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: 800;
+            color: #6366F1;
+            margin-bottom: 8px;
+        }
+
+        .price span {
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            opacity: 0.8;
+            font-size: 15px;
+        }
+
+        .pricing-features li::before {
+            content: "✅ ";
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 60px;
+            text-align: center;
+            opacity: 0.5;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="logo">🤖 BotBuddy</div>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="signup.html" class="nav-btn">Get Started Free</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-badge">🚀 AI Powered Customer Support</div>
+    <h1>Give Your Business<br/>An AI Assistant</h1>
+    <p>Create a smart chatbot for your business in minutes. No coding required. Available 24/7 to answer customer questions.</p>
+    <div class="hero-buttons">
+        <a href="signup.html" class="btn-primary">Start For Free →</a>
+        <a href="#features" class="btn-secondary">See How It Works</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <h2>Everything You Need 🛠️</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Setup in Minutes</h3>
+            <p>Enter your business info and get a fully trained AI chatbot ready to serve customers instantly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Powered</h3>
+            <p>Our AI understands customer questions and gives accurate answers based on your business information.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Easy to Embed</h3>
+            <p>Just paste one line of code on your website and your chatbot is live for all your customers.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Chat History</h3>
+            <p>See all customer conversations in your dashboard and never miss an important query.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>24/7 Available</h3>
+            <p>Your AI assistant never sleeps. It handles customer queries even when you're offline.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>Secure & Private</h3>
+            <p>Your business data is encrypted and secure. We never share your information with anyone.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+    <h2>Simple Pricing 💰</h2>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <h3>Starter</h3>
+            <div class="price">$29<span>/mo</span></div>
+            <ul class="pricing-features">
+                <li>1 Chatbot</li>
+                <li>500 messages/month</li>
+                <li>Basic analytics</li>
+                <li>Email support</li>
+            </ul>
+            <a href="signup.html" class="btn-primary">Get Started</a>
+        </div>
+        <div class="pricing-card popular">
+            <div class="popular-badge">⭐ Most Popular</div>
+            <h3>Pro</h3>
+            <div class="price">$59<span>/mo</span></div>
+            <ul class="pricing-features">
+                <li>5 Chatbots</li>
+                <li>5000 messages/month</li>
+                <li>Advanced analytics</li>
+                <li>Priority support</li>
+            </ul>
+            <a href="signup.html" class="btn-primary">Get Started</a>
+        </div>
+        <div class="pricing-card">
+            <h3>Enterprise</h3>
+            <div class="price">$99<span>/mo</span></div>
+            <ul class="pricing-features">
+                <li>Unlimited Chatbots</li>
+                <li>Unlimited messages</li>
+                <li>Custom analytics</li>
+                <li>24/7 support</li>
+            </ul>
+            <a href="signup.html" class="btn-primary">Get Started</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 BotBuddy — Built with ❤️ by Zain</p>
+</footer>
+
+</body>
+</html>

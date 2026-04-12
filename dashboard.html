@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BotBuddy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0F0F1A;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #6366F1;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+            border: 1px solid #EF4444;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Main content */
+        .main {
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .welcome {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .welcome span {
+            color: #6366F1;
+        }
+
+        .subtitle {
+            opacity: 0.6;
+            margin-bottom: 40px;
+        }
+
+        /* Create chatbot card */
+        .create-card {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid #6366F1;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .create-card h2 {
+            font-size: 22px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #6366F1;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            background: #6366F1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #4F46E5;
+            transform: translateY(-2px);
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22C55E;
+            color: #22C55E;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #EF4444;
+            color: #EF4444;
+        }
+
+        /* Chatbot result */
+        .chatbot-result {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+            display: none;
+        }
+
+        .chatbot-result h2 {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .embed-code {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #6366F1;
+            margin: 16px 0;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366F1;
+            border: 1px solid #6366F1;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="logo">🤖 BotBuddy</div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+    <div class="welcome">Welcome back, <span id="user-name">User</span>! 👋</div>
+    <p class="subtitle">Create your AI chatbot below and embed it on your website!</p>
+
+    <!-- Create Chatbot Form -->
+    <div class="create-card">
+        <h2>🤖 Create Your Chatbot</h2>
+
+        <div class="message" id="message"></div>
+
+        <div class="form-group">
+            <label>Business Name</label>
+            <input type="text" id="business-name" placeholder="e.g. Zain Pizza Shop"/>
+        </div>
+
+        <div class="form-group">
+            <label>Business Information</label>
+            <textarea id="business-info" placeholder="Tell the AI about your business — products, prices, hours, location, policies etc..."></textarea>
+        </div>
+
+        <button class="btn" onclick="createChatbot()">Create Chatbot →</button>
+    </div>
+
+    <!-- Chatbot Result -->
+    <div class="chatbot-result" id="chatbot-result">
+        <h2>🎉 Your Chatbot is Ready!</h2>
+        <p style="opacity:0.6; margin-bottom:16px;">Copy this code and paste it on your website:</p>
+        <div class="embed-code" id="embed-code"></div>
+        <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://web-production-e9d55.up.railway.app";
+
+    // Load user name
+    const userName = localStorage.getItem("user_name");
+    const userEmail = localStorage.getItem("user_email");
+
+    if (!userName) {
+        window.location.href = "login.html";
+    } else {
+        document.getElementById("user-name").innerText = userName;
+    }
+
+    async function createChatbot() {
+        const businessName = document.getElementById("business-name").value;
+        const businessInfo = document.getElementById("business-info").value;
+
+        if (!businessName || !businessInfo) {
+            showMessage("Please fill in all fields!", "error");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/business/create`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    user_email: userEmail,
+                    business_name: businessName,
+                    business_info: businessInfo
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showMessage("Chatbot created successfully!", "success");
+                showEmbedCode(data.business_id);
+            } else {
+                showMessage("Something went wrong!", "error");
+            }
+        } catch (error) {
+            showMessage("Something went wrong. Please try again!", "error");
+        }
+    }
+
+    function showEmbedCode(businessId) {
+        const code = `<script src="${API_URL}/widget.js?id=${businessId}"><\/script>`;
+        document.getElementById("embed-code").innerText = code;
+        document.getElementById("chatbot-result").style.display = "block";
+    }
+
+    function copyCode() {
+        const code = document.getElementById("embed-code").innerText;
+        navigator.clipboard.writeText(code);
+        alert("Code copied! Paste it on your website!");
+    }
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+    }
+
+    function showMessage(text, type) {
+        const msg = document.getElementById("message");
+        msg.innerText = text;
+        msg.className = "message " + type;
+        msg.style.display = "block";
+    }
+</script>
+
+</body>
+</html>

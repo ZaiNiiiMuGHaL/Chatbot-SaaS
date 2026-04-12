@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BotBuddy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0F0F1A;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 48px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #6366F1;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            opacity: 0.6;
+            margin-bottom: 36px;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #6366F1;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #6366F1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #4F46E5;
+            transform: translateY(-2px);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .signup-link a {
+            color: #6366F1;
+            text-decoration: none;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22C55E;
+            color: #22C55E;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #EF4444;
+            color: #EF4444;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">🤖 BotBuddy</div>
+    <p class="subtitle">Welcome back!</p>
+
+    <div class="message" id="message"></div>
+
+    <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email"/>
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password"/>
+    </div>
+
+    <button class="btn" onclick="login()">Login →</button>
+
+    <div class="signup-link">
+        Don't have an account? <a href="signup.html">Sign up here</a>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://web-production-e9d55.up.railway.app";
+
+    async function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+            showMessage("Please fill in all fields!", "error");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email, password})
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem("user_email", data.email);
+                localStorage.setItem("user_name", data.name);
+                showMessage("Login successful! Redirecting...", "success");
+                setTimeout(() => window.location.href = "dashboard.html", 2000);
+            } else {
+                showMessage(data.detail, "error");
+            }
+        } catch (error) {
+            showMessage("Something went wrong. Please try again!", "error");
+        }
+    }
+
+    function showMessage(text, type) {
+        const msg = document.getElementById("message");
+        msg.innerText = text;
+        msg.className = "message " + type;
+        msg.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
