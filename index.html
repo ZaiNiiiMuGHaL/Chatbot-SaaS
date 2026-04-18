@@ -239,6 +239,146 @@
             .pricing { padding: 100px 60px; }
             .features h2, .pricing h2 { font-size: 42px; }
         }
+        /* How It Works */
+.howitworks {
+    padding: 80px 24px;
+    text-align: center;
+    background: rgba(255,255,255,0.02);
+}
+
+.howitworks h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+
+.steps-container {
+    max-width: 500px;
+    margin: 0 auto 60px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px 24px;
+    text-align: left;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease;
+}
+
+.step.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.step-icon {
+    font-size: 36px;
+    min-width: 50px;
+}
+
+.step h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+    color: #6366F1;
+}
+
+.step p {
+    font-size: 13px;
+    opacity: 0.6;
+    line-height: 1.5;
+}
+
+.step-arrow {
+    font-size: 24px;
+    opacity: 0.4;
+    margin: 8px 0;
+    text-align: center;
+}
+
+/* Chat Demo */
+.chat-demo {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #1a1a2e;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.chat-demo-header {
+    background: #6366F1;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.chat-demo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.chat-demo-dot.red { background: #FF5F57; }
+.chat-demo-dot.yellow { background: #FFBD2E; }
+.chat-demo-dot.green { background: #28CA41; }
+
+.chat-demo-messages {
+    padding: 16px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.demo-message {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    max-width: 85%;
+    line-height: 1.5;
+    animation: fadeIn 0.5s ease;
+}
+
+.demo-message.bot {
+    background: #6366F1;
+    color: white;
+    align-self: flex-start;
+}
+
+.demo-message.user {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.chat-demo-input {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 13px;
+    opacity: 0.5;
+    min-height: 44px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+    .howitworks { padding: 100px 60px; }
+    .howitworks h2 { font-size: 42px; }
+    .steps-container { max-width: 600px; }
+}
     </style>
 </head>
 <body>
@@ -257,7 +397,68 @@
         <a href="#features" class="btn-secondary">See How It Works</a>
     </div>
 </section>
+<!-- How It Works Section -->
+<section class="howitworks" id="howitworks">
+    <h2>How It Works 🎬</h2>
+    <div class="steps-container">
 
+        <div class="step" data-step="1">
+            <div class="step-icon">📝</div>
+            <div class="step-content">
+                <h3>1. Enter Your Business Info</h3>
+                <p>Tell us about your business — products, prices, hours, location.</p>
+            </div>
+        </div>
+
+        <div class="step-arrow">↓</div>
+
+        <div class="step" data-step="2">
+            <div class="step-icon">🤖</div>
+            <div class="step-content">
+                <h3>2. AI Trains Instantly</h3>
+                <p>Our AI reads your info and becomes your 24/7 support agent.</p>
+            </div>
+        </div>
+
+        <div class="step-arrow">↓</div>
+
+        <div class="step" data-step="3">
+            <div class="step-icon">💬</div>
+            <div class="step-content">
+                <h3>3. Customers Chat With AI</h3>
+                <p>Your chatbot answers customer questions instantly — day or night!</p>
+            </div>
+        </div>
+
+        <div class="step-arrow">↓</div>
+
+        <div class="step" data-step="4">
+            <div class="step-icon">💰</div>
+            <div class="step-content">
+                <h3>4. You Save Time & Money</h3>
+                <p>No more answering the same questions. Focus on growing your business!</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Animated Chat Demo -->
+    <div class="chat-demo">
+        <div class="chat-demo-header">
+            <div class="chat-demo-dot red"></div>
+            <div class="chat-demo-dot yellow"></div>
+            <div class="chat-demo-dot green"></div>
+            <span>🤖 BotBuddy — Live Demo</span>
+        </div>
+        <div class="chat-demo-messages" id="demo-messages">
+            <div class="demo-message bot">Hi! I'm the AI assistant for Zain Pizza Shop. How can I help you? 😊</div>
+        </div>
+        <div class="chat-demo-input">
+            <span id="demo-typing"></span>
+        </div>
+    </div>
+
+</section>
 <section class="features" id="features">
     <h2>Everything You Need 🛠️</h2>
     <div class="features-grid">
@@ -337,6 +538,61 @@
 <footer>
     <p>© 2026 BotBuddy — Built with ❤️ by Zain</p>
 </footer>
+<script>
+    // Animate steps on scroll
+    const steps = document.querySelectorAll('.step');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 200);
+            }
+        });
+    }, {threshold: 0.1});
 
+    steps.forEach(step => observer.observe(step));
+
+    // Animated chat demo
+    const demoConversation = [
+        {type: "user", text: "How long does delivery take?"},
+        {type: "bot", text: "Our delivery takes about 30 minutes! 🍕"},
+        {type: "user", text: "What's your most popular pizza?"},
+        {type: "bot", text: "Our Pepperoni pizza is the customer favourite! Only $12 😋"},
+        {type: "user", text: "Are you open on Sundays?"},
+        {type: "bot", text: "Yes! We're open 9am to 10pm every day including Sundays! 🎉"},
+    ];
+
+    let demoIndex = 0;
+    const demoMessages = document.getElementById('demo-messages');
+    const demoTyping = document.getElementById('demo-typing');
+
+    function addDemoMessage() {
+        if (demoIndex >= demoConversation.length) {
+            demoIndex = 0;
+            setTimeout(() => {
+                demoMessages.innerHTML = '<div class="demo-message bot">Hi! I\'m the AI assistant for Zain Pizza Shop. How can I help you? 😊</div>';
+                setTimeout(addDemoMessage, 2000);
+            }, 3000);
+            return;
+        }
+
+        const msg = demoConversation[demoIndex];
+        demoTyping.innerText = msg.type === 'bot' ? '🤖 BotBuddy is typing...' : '👤 Customer is typing...';
+
+        setTimeout(() => {
+            demoTyping.innerText = '';
+            const div = document.createElement('div');
+            div.className = `demo-message ${msg.type}`;
+            div.innerText = msg.text;
+            demoMessages.appendChild(div);
+            demoMessages.scrollTop = demoMessages.scrollHeight;
+            demoIndex++;
+            setTimeout(addDemoMessage, 2000);
+        }, 1500);
+    }
+
+    setTimeout(addDemoMessage, 2000);
+</script>
 </body>
 </html>
