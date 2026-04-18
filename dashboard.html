@@ -14,18 +14,20 @@
             min-height: 100vh;
         }
 
-        /* Navbar */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 16px 24px;
             background: rgba(255,255,255,0.05);
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: #6366F1;
         }
@@ -34,51 +36,46 @@
             background: rgba(239, 68, 68, 0.2);
             color: #EF4444;
             border: 1px solid #EF4444;
-            padding: 8px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        /* Main content */
         .main {
-            padding: 40px;
-            max-width: 900px;
+            padding: 24px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .welcome {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .welcome span {
-            color: #6366F1;
-        }
+        .welcome span { color: #6366F1; }
 
         .subtitle {
             opacity: 0.6;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
+            font-size: 14px;
         }
 
-        /* Create chatbot card */
         .create-card {
             background: rgba(99, 102, 241, 0.1);
             border: 1px solid #6366F1;
             border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 40px;
+            padding: 24px;
+            margin-bottom: 32px;
         }
 
         .create-card h2 {
-            font-size: 22px;
-            margin-bottom: 24px;
-        }
-
-        .form-group {
+            font-size: 20px;
             margin-bottom: 20px;
         }
+
+        .form-group { margin-bottom: 16px; }
 
         label {
             display: block;
@@ -98,38 +95,33 @@
             outline: none;
             transition: border 0.3s;
             font-family: 'Segoe UI', sans-serif;
+            -webkit-appearance: none;
         }
 
-        textarea {
-            height: 120px;
-            resize: vertical;
-        }
+        textarea { height: 120px; resize: vertical; }
 
-        input:focus, textarea:focus {
-            border-color: #6366F1;
-        }
+        input:focus, textarea:focus { border-color: #6366F1; }
 
         .btn {
-            padding: 14px 32px;
+            width: 100%;
+            padding: 16px;
             background: #6366F1;
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            -webkit-appearance: none;
         }
 
-        .btn:hover {
-            background: #4F46E5;
-            transform: translateY(-2px);
-        }
+        .btn:active { background: #4F46E5; transform: scale(0.98); }
 
         .message {
             padding: 12px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-size: 14px;
             display: none;
         }
@@ -146,18 +138,17 @@
             color: #EF4444;
         }
 
-        /* Chatbot result */
         .chatbot-result {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
-            padding: 32px;
+            padding: 24px;
             display: none;
         }
 
         .chatbot-result h2 {
-            font-size: 22px;
-            margin-bottom: 16px;
+            font-size: 20px;
+            margin-bottom: 12px;
         }
 
         .embed-code {
@@ -166,37 +157,44 @@
             border-radius: 10px;
             padding: 16px;
             font-family: monospace;
-            font-size: 13px;
+            font-size: 12px;
             color: #6366F1;
             margin: 16px 0;
             word-break: break-all;
+            line-height: 1.6;
         }
 
         .copy-btn {
+            width: 100%;
             background: rgba(99, 102, 241, 0.2);
             color: #6366F1;
             border: 1px solid #6366F1;
-            padding: 8px 20px;
+            padding: 12px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
+        }
+
+        @media (min-width: 768px) {
+            .main { padding: 40px; }
+            .welcome { font-size: 28px; }
+            .create-card { padding: 32px; }
+            .btn:hover { background: #4F46E5; transform: translateY(-2px); }
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav>
     <div class="logo">🤖 BotBuddy</div>
     <button class="logout-btn" onclick="logout()">Logout</button>
 </nav>
 
-<!-- Main Content -->
 <div class="main">
-    <div class="welcome">Welcome back, <span id="user-name">User</span>! 👋</div>
-    <p class="subtitle">Create your AI chatbot below and embed it on your website!</p>
+    <div class="welcome">Welcome, <span id="user-name">User</span>! 👋</div>
+    <p class="subtitle">Create your AI chatbot and embed it on your website!</p>
 
-    <!-- Create Chatbot Form -->
     <div class="create-card">
         <h2>🤖 Create Your Chatbot</h2>
 
@@ -204,30 +202,28 @@
 
         <div class="form-group">
             <label>Business Name</label>
-            <input type="text" id="business-name" placeholder="e.g. Zain Pizza Shop"/>
+            <input type="text" id="business-name" placeholder="e.g. My Pizza Shop"/>
         </div>
 
         <div class="form-group">
             <label>Business Information</label>
-            <textarea id="business-info" placeholder="Tell the AI about your business — products, prices, hours, location, policies etc..."></textarea>
+            <textarea id="business-info" placeholder="Tell the AI about your business — products, prices, hours, location..."></textarea>
         </div>
 
         <button class="btn" onclick="createChatbot()">Create Chatbot →</button>
     </div>
 
-    <!-- Chatbot Result -->
     <div class="chatbot-result" id="chatbot-result">
         <h2>🎉 Your Chatbot is Ready!</h2>
-        <p style="opacity:0.6; margin-bottom:16px;">Copy this code and paste it on your website:</p>
+        <p style="opacity:0.6; margin-bottom:12px; font-size:14px;">Copy this code and paste it on your website:</p>
         <div class="embed-code" id="embed-code"></div>
-        <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+        <button class="copy-btn" onclick="copyCode()">📋 Copy Embed Code</button>
     </div>
 </div>
 
 <script>
     const API_URL = "https://web-production-e9d55.up.railway.app";
 
-    // Load user name
     const userName = localStorage.getItem("user_name");
     const userEmail = localStorage.getItem("user_email");
 
@@ -274,6 +270,7 @@
         const code = `<script src="${API_URL}/widget.js?id=${businessId}"><\/script>`;
         document.getElementById("embed-code").innerText = code;
         document.getElementById("chatbot-result").style.display = "block";
+        document.getElementById("chatbot-result").scrollIntoView({behavior: "smooth"});
     }
 
     function copyCode() {

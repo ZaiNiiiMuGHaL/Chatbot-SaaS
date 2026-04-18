@@ -6,7 +6,7 @@
     <title>Sign Up - BotBuddy</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Segoe UI', sans-serif;
             background: #0F0F1A;
@@ -15,19 +15,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 24px;
         }
 
         .container {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
-            padding: 48px;
+            padding: 36px 24px;
             width: 100%;
             max-width: 420px;
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
             color: #6366F1;
             text-align: center;
@@ -37,13 +38,11 @@
         .subtitle {
             text-align: center;
             opacity: 0.6;
-            margin-bottom: 36px;
-            font-size: 15px;
+            margin-bottom: 32px;
+            font-size: 14px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 18px; }
 
         label {
             display: block;
@@ -62,11 +61,10 @@
             font-size: 15px;
             outline: none;
             transition: border 0.3s;
+            -webkit-appearance: none;
         }
 
-        input:focus {
-            border-color: #6366F1;
-        }
+        input:focus { border-color: #6366F1; }
 
         .btn {
             width: 100%;
@@ -80,29 +78,24 @@
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.3s;
+            -webkit-appearance: none;
         }
 
-        .btn:hover {
-            background: #4F46E5;
-            transform: translateY(-2px);
-        }
+        .btn:active { background: #4F46E5; transform: scale(0.98); }
 
         .login-link {
             text-align: center;
-            margin-top: 24px;
+            margin-top: 20px;
             font-size: 14px;
             opacity: 0.6;
         }
 
-        .login-link a {
-            color: #6366F1;
-            text-decoration: none;
-        }
+        .login-link a { color: #6366F1; text-decoration: none; }
 
         .message {
             padding: 12px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-size: 14px;
             display: none;
         }
@@ -117,6 +110,11 @@
             background: rgba(239, 68, 68, 0.2);
             border: 1px solid #EF4444;
             color: #EF4444;
+        }
+
+        @media (min-width: 768px) {
+            .container { padding: 48px; }
+            .btn:hover { background: #4F46E5; transform: translateY(-2px); }
         }
     </style>
 </head>
@@ -173,7 +171,7 @@
             const data = await response.json();
 
             if (response.ok) {
-                showMessage("Account created successfully! Redirecting...", "success");
+                showMessage("Account created! Redirecting...", "success");
                 setTimeout(() => window.location.href = "login.html", 2000);
             } else {
                 showMessage(data.detail, "error");

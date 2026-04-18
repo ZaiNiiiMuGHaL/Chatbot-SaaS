@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatBot SaaS</title>
+    <title>BotBuddy — AI Chatbot for Small Businesses</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Segoe UI', sans-serif;
             background: #0F0F1A;
@@ -18,7 +18,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 60px;
+            padding: 16px 24px;
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
             position: fixed;
@@ -28,30 +28,22 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: #6366F1;
         }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 15px;
-            opacity: 0.8;
-        }
-
-        .nav-links a:hover { opacity: 1; }
-
         .nav-btn {
             background: #6366F1;
-            color: white !important;
-            padding: 10px 24px;
+            color: white;
+            padding: 10px 20px;
             border-radius: 8px;
-            opacity: 1 !important;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -59,7 +51,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 100px 24px 60px;
             background: radial-gradient(ellipse at top, #1a1a3e 0%, #0F0F1A 70%);
         }
 
@@ -69,81 +61,77 @@
             color: #6366F1;
             padding: 8px 20px;
             border-radius: 50px;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 24px;
+            display: inline-block;
         }
 
         .hero h1 {
-            font-size: 64px;
+            font-size: 42px;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             background: linear-gradient(135deg, #fff 0%, #6366F1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 20px;
+            font-size: 17px;
             opacity: 0.7;
-            max-width: 600px;
+            max-width: 500px;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 16px;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 300px;
         }
 
         .btn-primary {
             background: #6366F1;
             color: white;
-            padding: 16px 36px;
+            padding: 16px;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             text-decoration: none;
+            text-align: center;
             transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: #4F46E5;
-            transform: translateY(-2px);
         }
 
         .btn-secondary {
             background: rgba(255,255,255,0.1);
             color: white;
-            padding: 16px 36px;
+            padding: 16px;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s;
+            text-align: center;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        /* Features Section */
+        /* Features */
         .features {
-            padding: 100px 60px;
+            padding: 80px 24px;
             text-align: center;
         }
 
         .features h2 {
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1000px;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
@@ -151,50 +139,32 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
-            padding: 32px;
+            padding: 24px;
             text-align: left;
-            transition: all 0.3s;
         }
 
-        .feature-card:hover {
-            border-color: #6366F1;
-            transform: translateY(-4px);
-        }
+        .feature-icon { font-size: 32px; margin-bottom: 12px; }
+        .feature-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .feature-card p { opacity: 0.6; line-height: 1.6; font-size: 14px; }
 
-        .feature-icon {
-            font-size: 36px;
-            margin-bottom: 16px;
-        }
-
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            opacity: 0.6;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-
-        /* Pricing Section */
+        /* Pricing */
         .pricing {
-            padding: 100px 60px;
+            padding: 80px 24px;
             text-align: center;
             background: rgba(255,255,255,0.02);
         }
 
         .pricing h2 {
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 900px;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 400px;
             margin: 0 auto;
         }
 
@@ -202,8 +172,7 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
-            padding: 40px 32px;
-            transition: all 0.3s;
+            padding: 32px 24px;
         }
 
         .pricing-card.popular {
@@ -217,114 +186,113 @@
             padding: 4px 16px;
             border-radius: 50px;
             font-size: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: inline-block;
         }
 
-        .pricing-card h3 {
-            font-size: 22px;
-            margin-bottom: 16px;
-        }
+        .pricing-card h3 { font-size: 20px; margin-bottom: 12px; }
 
         .price {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 800;
             color: #6366F1;
             margin-bottom: 8px;
         }
 
-        .price span {
-            font-size: 16px;
-            opacity: 0.6;
-        }
+        .price span { font-size: 16px; opacity: 0.6; }
 
         .pricing-features {
             list-style: none;
-            margin: 24px 0;
+            margin: 20px 0;
             text-align: left;
         }
 
         .pricing-features li {
-            padding: 8px 0;
+            padding: 6px 0;
             opacity: 0.8;
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .pricing-features li::before {
-            content: "✅ ";
-        }
+        .pricing-features li::before { content: "✅ "; }
 
         /* Footer */
         footer {
-            padding: 40px 60px;
+            padding: 30px 24px;
             text-align: center;
             opacity: 0.5;
-            font-size: 14px;
+            font-size: 13px;
             border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            nav { padding: 20px 60px; }
+            .logo { font-size: 24px; }
+            .hero h1 { font-size: 64px; }
+            .hero p { font-size: 20px; }
+            .hero-buttons { flex-direction: row; max-width: none; }
+            .btn-primary, .btn-secondary { padding: 16px 36px; }
+            .features-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; }
+            .pricing-grid { grid-template-columns: repeat(3, 1fr); max-width: 900px; }
+            .features { padding: 100px 60px; }
+            .pricing { padding: 100px 60px; }
+            .features h2, .pricing h2 { font-size: 42px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav>
     <div class="logo">🤖 BotBuddy</div>
-    <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="signup.html" class="nav-btn">Get Started Free</a>
-    </div>
+    <a href="signup.html" class="nav-btn">Get Started Free</a>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero">
     <div class="hero-badge">🚀 AI Powered Customer Support</div>
     <h1>Give Your Business<br/>An AI Assistant</h1>
-    <p>Create a smart chatbot for your business in minutes. No coding required. Available 24/7 to answer customer questions.</p>
+    <p>Create a smart chatbot for your business in minutes. No coding required. Available 24/7.</p>
     <div class="hero-buttons">
         <a href="signup.html" class="btn-primary">Start For Free →</a>
         <a href="#features" class="btn-secondary">See How It Works</a>
     </div>
 </section>
 
-<!-- Features Section -->
 <section class="features" id="features">
     <h2>Everything You Need 🛠️</h2>
     <div class="features-grid">
         <div class="feature-card">
             <div class="feature-icon">⚡</div>
             <h3>Setup in Minutes</h3>
-            <p>Enter your business info and get a fully trained AI chatbot ready to serve customers instantly.</p>
+            <p>Enter your business info and get a fully trained AI chatbot instantly.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">🤖</div>
             <h3>AI Powered</h3>
-            <p>Our AI understands customer questions and gives accurate answers based on your business information.</p>
+            <p>Our AI understands customer questions and gives accurate answers.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">💬</div>
             <h3>Easy to Embed</h3>
-            <p>Just paste one line of code on your website and your chatbot is live for all your customers.</p>
+            <p>Just paste one line of code on your website and your chatbot is live.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">📊</div>
             <h3>Chat History</h3>
-            <p>See all customer conversations in your dashboard and never miss an important query.</p>
+            <p>See all customer conversations in your dashboard.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">🌍</div>
             <h3>24/7 Available</h3>
-            <p>Your AI assistant never sleeps. It handles customer queries even when you're offline.</p>
+            <p>Your AI assistant never sleeps. Always ready for customers.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">🔐</div>
             <h3>Secure & Private</h3>
-            <p>Your business data is encrypted and secure. We never share your information with anyone.</p>
+            <p>Your business data is encrypted and secure always.</p>
         </div>
     </div>
 </section>
 
-<!-- Pricing Section -->
 <section class="pricing" id="pricing">
     <h2>Simple Pricing 💰</h2>
     <div class="pricing-grid">
@@ -365,7 +333,6 @@
     </div>
 </section>
 
-<!-- Footer -->
 <footer>
     <p>© 2026 BotBuddy — Built with ❤️ by Zain</p>
 </footer>
