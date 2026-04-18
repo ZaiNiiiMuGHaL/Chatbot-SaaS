@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BotBuddy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0F0F1A;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            padding: 24px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #6366F1;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+            opacity: 0.7;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.08);
+            opacity: 1;
+        }
+
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.2);
+            border-right: 3px solid #6366F1;
+            opacity: 1;
+            color: #6366F1;
+        }
+
+        .nav-icon { font-size: 20px; min-width: 24px; }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #6366F1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .user-details { flex: 1; overflow: hidden; }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            font-size: 12px;
+            opacity: 0.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+
+        /* ===== MOBILE TOPBAR ===== */
+        .topbar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 20px;
+            background: rgba(15,15,26,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 200;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar-logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #6366F1;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        /* ===== PAGES ===== */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            opacity: 0.5;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        /* ===== DASHBOARD PAGE ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .stat-icon { font-size: 28px; margin-bottom: 12px; }
+        .stat-value { font-size: 32px; font-weight: 700; color: #6366F1; }
+        .stat-label { font-size: 13px; opacity: 0.5; margin-top: 4px; }
+
+        /* ===== CREATE CHATBOT ===== */
+        .card {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid #6366F1;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .card h2 { font-size: 20px; margin-bottom: 20px; }
+
+        .form-group { margin-bottom: 16px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Segoe UI', sans-serif;
+            transition: border 0.2s;
+        }
+
+        textarea { height: 110px; resize: vertical; }
+        input:focus, textarea:focus { border-color: #6366F1; }
+
+        .btn {
+            padding: 13px 28px;
+            background: #6366F1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #4F46E5; }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22C55E;
+            color: #22C55E;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #EF4444;
+            color: #EF4444;
+        }
+
+        .embed-box {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #6366F1;
+            margin: 16px 0;
+            word-break: break-all;
+            line-height: 1.6;
+            display: none;
+        }
+
+        /* ===== PROFILE PAGE ===== */
+        .profile-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: #6366F1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            text-align: center;
+            opacity: 0.5;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .profile-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 20px 0;
+        }
+
+        .profile-field {
+            margin-bottom: 16px;
+        }
+
+        /* ===== OVERLAY ===== */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .topbar { display: flex; }
+
+            .main {
+                margin-left: 0;
+                padding: 80px 20px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .overlay.show { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Mobile Topbar -->
+<div class="topbar">
+    <div class="topbar-logo">🤖 BotBuddy</div>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">🤖 BotBuddy</div>
+
+    <nav class="sidebar-nav">
+        <a class="nav-item active" onclick="showPage('dashboard')">
+            <span class="nav-icon">📊</span> Dashboard
+        </a>
+        <a class="nav-item" onclick="showPage('chatbots')">
+            <span class="nav-icon">💬</span> My Chatbots
+        </a>
+        <a class="nav-item" onclick="showPage('profile')">
+            <span class="nav-icon">👤</span> Profile
+        </a>
+        <a class="nav-item" onclick="showPage('settings')">
+            <span class="nav-icon">⚙️</span> Settings
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="avatar" id="sidebar-avatar">Z</div>
+            <div class="user-details">
+                <div class="user-name" id="sidebar-name">Zain</div>
+                <div class="user-email" id="sidebar-email">zain@gmail.com</div>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+    <!-- Dashboard Page -->
+    <div class="page active" id="page-dashboard">
+        <div class="page-title">Dashboard 📊</div>
+        <div class="page-subtitle">Welcome back! Here's your overview.</div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🤖</div>
+                <div class="stat-value">1</div>
+                <div class="stat-label">Active Chatbots</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-value">24</div>
+                <div class="stat-label">Total Chats</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Response Rate</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🤖 Create New Chatbot</h2>
+            <div class="message" id="message"></div>
+            <div class="form-group">
+                <label>Business Name</label>
+                <input type="text" id="business-name" placeholder="e.g. My Pizza Shop"/>
+            </div>
+            <div class="form-group">
+                <label>Business Information</label>
+                <textarea id="business-info" placeholder="Tell the AI about your business..."></textarea>
+            </div>
+            <button class="btn" onclick="createChatbot()">Create Chatbot →</button>
+            <div class="embed-box" id="embed-box"></div>
+        </div>
+    </div>
+
+    <!-- My Chatbots Page -->
+    <div class="page" id="page-chatbots">
+        <div class="page-title">My Chatbots 💬</div>
+        <div class="page-subtitle">All your created chatbots are here.</div>
+        <div class="card">
+            <h2>🤖 Zain Pizza Shop</h2>
+            <p style="opacity:0.6; font-size:14px; margin-bottom:16px;">Created and active — ready to serve customers!</p>
+            <button class="btn" onclick="showPage('dashboard')">➕ Create New Chatbot</button>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div class="page" id="page-profile">
+        <div class="page-title">Profile 👤</div>
+        <div class="page-subtitle">Manage your account information.</div>
+
+        <div class="profile-card">
+            <div class="profile-avatar" id="profile-avatar">Z</div>
+            <div class="profile-name" id="profile-name">Zain</div>
+            <div class="profile-email" id="profile-email">zain@gmail.com</div>
+
+            <hr class="profile-divider"/>
+
+            <div class="profile-field">
+                <label>Full Name</label>
+                <input type="text" id="edit-name" placeholder="Your name"/>
+            </div>
+            <div class="profile-field">
+                <label>Email Address</label>
+                <input type="email" id="edit-email" placeholder="Your email" disabled style="opacity:0.5"/>
+            </div>
+            <div class="profile-field">
+                <label>New Password</label>
+                <input type="password" id="edit-password" placeholder="Leave blank to keep current"/>
+            </div>
+
+            <button class="btn" style="width:100%; margin-top:8px;" onclick="saveProfile()">💾 Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Settings Page -->
+    <div class="page" id="page-settings">
+        <div class="page-title">Settings ⚙️</div>
+        <div class="page-subtitle">Manage your BotBuddy preferences.</div>
+        <div class="card">
+            <h2>🎨 Chatbot Appearance</h2>
+            <div class="form-group">
+                <label>Chatbot Name</label>
+                <input type="text" placeholder="e.g. Support Bot"/>
+            </div>
+            <div class="form-group">
+                <label>Welcome Message</label>
+                <input type="text" placeholder="e.g. Hi! How can I help you?"/>
+            </div>
+            <button class="btn">Save Settings</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const API_URL = "https://web-production-e9d55.up.railway.app";
+
+    // Load user info
+    const userName = localStorage.getItem("user_name") || "User";
+    const userEmail = localStorage.getItem("user_email") || "";
+
+    if (!userName || userName === "User") {
+        window.location.href = "login.html";
+    }
+
+    // Set user info
+    document.getElementById("sidebar-name").innerText = userName;
+    document.getElementById("sidebar-email").innerText = userEmail;
+    document.getElementById("sidebar-avatar").innerText = userName.charAt(0).toUpperCase();
+    document.getElementById("profile-name").innerText = userName;
+    document.getElementById("profile-email").innerText = userEmail;
+    document.getElementById("profile-avatar").innerText = userName.charAt(0).toUpperCase();
+    document.getElementById("edit-name").value = userName;
+    document.getElementById("edit-email").value = userEmail;
+
+    // Show page
+    function showPage(pageName) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('page-' + pageName).classList.add('active');
+        event.currentTarget.classList.add('active');
+        if (window.innerWidth <= 768) toggleSidebar();
+    }
+
+    // Toggle sidebar on mobile
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('show');
+    }
+
+    // Create chatbot
+    async function createChatbot() {
+        const businessName = document.getElementById("business-name").value;
+        const businessInfo = document.getElementById("business-info").value;
+
+        if (!businessName || !businessInfo) {
+            showMessage("Please fill in all fields!", "error");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/business/create`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    user_email: userEmail,
+                    business_name: businessName,
+                    business_info: businessInfo
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showMessage("Chatbot created successfully! 🎉", "success");
+                const embedBox = document.getElementById("embed-box");
+                embedBox.innerText = `<script src="${API_URL}/widget.js?id=${data.business_id}"><\/script>`;
+                embedBox.style.display = "block";
+            } else {
+                showMessage("Something went wrong!", "error");
+            }
+        } catch (error) {
+            showMessage("Something went wrong!", "error");
+        }
+    }
+
+    // Save profile
+    function saveProfile() {
+        const newName = document.getElementById("edit-name").value;
+        if (newName) {
+            localStorage.setItem("user_name", newName);
+            document.getElementById("sidebar-name").innerText = newName;
+            document.getElementById("profile-name").innerText = newName;
+            document.getElementById("sidebar-avatar").innerText = newName.charAt(0).toUpperCase();
+            document.getElementById("profile-avatar").innerText = newName.charAt(0).toUpperCase();
+            alert("Profile updated successfully! ✅");
+        }
+    }
+
+    // Logout
+    function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+    }
+
+    // Show message
+    function showMessage(text, type) {
+        const msg = document.getElementById("message");
+        msg.innerText = text;
+        msg.className = "message " + type;
+        msg.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
