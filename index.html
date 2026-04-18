@@ -44,6 +44,7 @@
         }
 
         /* Hero */
+        
         .hero {
             min-height: 100vh;
             display: flex;
@@ -411,6 +412,7 @@
                 <p>Tell us about your business — products, prices, hours, location.</p>
             </div>
         </div>
+      
 
         <div class="step-arrow">↓</div>
 
@@ -595,6 +597,25 @@
     }
 
     setTimeout(addDemoMessage, 2000);
+    function finishBotCreation() {
+    // This makes the success window pop up
+    const modal = document.getElementById('successModal');
+    modal.style.display = 'flex';
+    
+    // Optional: Scroll to top so they see it clearly
+    window.scrollTo(0, 0);
+}
 </script>
+<div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; backdrop-filter: blur(10px); align-items: center; justify-content: center;">
+    <div style="background: #1a1a2e; border: 1px solid #6366F1; padding: 40px; border-radius: 24px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);">
+        <div style="font-size: 60px; margin-bottom: 20px;">🤖</div>
+        <h2 style="font-size: 28px; margin-bottom: 10px; color: white;">Your bot is alive!</h2>
+        <p style="color: rgba(255,255,255,0.7); margin-bottom: 30px; line-height: 1.5;">Great job! Your AI assistant is trained and ready to help your customers.</p>
+        
+        <a href="dashboard.html" style="display: block; width: 100%; background: #6366F1; color: white; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 600; margin-bottom: 12px; transition: 0.3s;">Go to Dashboard</a>
+        
+        <a href="profile.html" style="display: block; width: 100%; background: rgba(255,255,255,0.1); color: white; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);">View Profile</a>
+    </div>
+</div>
 </body>
 </html>

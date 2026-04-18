@@ -26,11 +26,7 @@
             z-index: 100;
         }
 
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #6366F1;
-        }
+        .logo { font-size: 20px; font-weight: bold; color: #6366F1; }
 
         .logout-btn {
             background: rgba(239, 68, 68, 0.2);
@@ -42,25 +38,11 @@
             font-size: 13px;
         }
 
-        .main {
-            padding: 24px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .main { padding: 24px; max-width: 700px; margin: 0 auto; }
 
-        .welcome {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
+        .welcome { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
         .welcome span { color: #6366F1; }
-
-        .subtitle {
-            opacity: 0.6;
-            margin-bottom: 32px;
-            font-size: 14px;
-        }
+        .subtitle { opacity: 0.6; margin-bottom: 32px; font-size: 14px; }
 
         .create-card {
             background: rgba(99, 102, 241, 0.1);
@@ -70,19 +52,10 @@
             margin-bottom: 32px;
         }
 
-        .create-card h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
+        .create-card h2 { font-size: 20px; margin-bottom: 20px; }
         .form-group { margin-bottom: 16px; }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
+        label { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.8; }
 
         input, textarea {
             width: 100%;
@@ -99,7 +72,6 @@
         }
 
         textarea { height: 120px; resize: vertical; }
-
         input:focus, textarea:focus { border-color: #6366F1; }
 
         .btn {
@@ -126,17 +98,8 @@
             display: none;
         }
 
-        .success {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22C55E;
-            color: #22C55E;
-        }
-
-        .error {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid #EF4444;
-            color: #EF4444;
-        }
+        .success { background: rgba(34,197,94,0.2); border: 1px solid #22C55E; color: #22C55E; }
+        .error { background: rgba(239,68,68,0.2); border: 1px solid #EF4444; color: #EF4444; }
 
         .chatbot-result {
             background: rgba(255,255,255,0.05);
@@ -146,10 +109,7 @@
             display: none;
         }
 
-        .chatbot-result h2 {
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
+        .chatbot-result h2 { font-size: 20px; margin-bottom: 12px; }
 
         .embed-code {
             background: #1a1a2e;
@@ -166,7 +126,7 @@
 
         .copy-btn {
             width: 100%;
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99,102,241,0.2);
             color: #6366F1;
             border: 1px solid #6366F1;
             padding: 12px;
@@ -174,6 +134,56 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 600;
+        }
+
+        .next-buttons {
+            display: none;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .next-btn-primary {
+            flex: 1;
+            padding: 14px;
+            background: #6366F1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .next-btn-green {
+            flex: 1;
+            padding: 14px;
+            background: rgba(34,197,94,0.2);
+            color: #22C55E;
+            border: 1px solid #22C55E;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .next-btn-gray {
+            flex: 1;
+            padding: 14px;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
         }
 
         @media (min-width: 768px) {
@@ -197,19 +207,15 @@
 
     <div class="create-card">
         <h2>🤖 Create Your Chatbot</h2>
-
         <div class="message" id="message"></div>
-
         <div class="form-group">
             <label>Business Name</label>
             <input type="text" id="business-name" placeholder="e.g. My Pizza Shop"/>
         </div>
-
         <div class="form-group">
             <label>Business Information</label>
             <textarea id="business-info" placeholder="Tell the AI about your business — products, prices, hours, location..."></textarea>
         </div>
-
         <button class="btn" onclick="createChatbot()">Create Chatbot →</button>
     </div>
 
@@ -218,6 +224,13 @@
         <p style="opacity:0.6; margin-bottom:12px; font-size:14px;">Copy this code and paste it on your website:</p>
         <div class="embed-code" id="embed-code"></div>
         <button class="copy-btn" onclick="copyCode()">📋 Copy Embed Code</button>
+
+        <!-- Next Step Buttons -->
+        <div class="next-buttons" id="next-buttons">
+            <a href="sidebar.html" class="next-btn-primary">📊 Go to Dashboard</a>
+            <a href="sidebar.html" class="next-btn-green">📈 View Analytics</a>
+            <button class="next-btn-gray" onclick="location.reload()">➕ Create Another</button>
+        </div>
     </div>
 </div>
 
@@ -256,7 +269,7 @@
             const data = await response.json();
 
             if (response.ok) {
-                showMessage("Chatbot created successfully!", "success");
+                showMessage("Chatbot created successfully! 🎉", "success");
                 showEmbedCode(data.business_id);
             } else {
                 showMessage("Something went wrong!", "error");
@@ -270,13 +283,14 @@
         const code = `<script src="${API_URL}/widget.js?id=${businessId}"><\/script>`;
         document.getElementById("embed-code").innerText = code;
         document.getElementById("chatbot-result").style.display = "block";
+        document.getElementById("next-buttons").style.display = "flex";
         document.getElementById("chatbot-result").scrollIntoView({behavior: "smooth"});
     }
 
     function copyCode() {
         const code = document.getElementById("embed-code").innerText;
         navigator.clipboard.writeText(code);
-        alert("Code copied! Paste it on your website!");
+        alert("✅ Code copied! Paste it on your website!");
     }
 
     function logout() {
