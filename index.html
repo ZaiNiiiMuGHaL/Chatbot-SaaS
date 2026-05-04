@@ -725,7 +725,7 @@
 
         // Draw nodes
         nodes.forEach(node => {
-            const pulseRadius = node.radius + Math.sin(node.pulse) * 1.5;
+            const pulseRadius = Math.max(0.1, node.radius + Math.sin(node.pulse) * 1.5);
 
             // Outer glow
             const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, pulseRadius * 4);
@@ -747,7 +747,7 @@
     }
 
     animateNetwork();
-    
+
     // ===== TYPING ANIMATION =====
     const texts = [
         "Give Your Business An AI Assistant",
