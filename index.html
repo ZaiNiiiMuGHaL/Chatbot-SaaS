@@ -632,7 +632,7 @@
     window.addEventListener('resize', resizeCanvas);
 
     const nodes = [];
-    const NODE_COUNT = 80;
+    const NODE_COUNT = window.innerWidth < 768 ? 30 : 80;
     const CONNECTION_DISTANCE = 150;
     const PULSE_SPEED = 0.02;
 
