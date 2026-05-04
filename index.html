@@ -11,9 +11,10 @@
             font-family: 'Segoe UI', sans-serif;
             background: #0F0F1A;
             color: white;
+            overflow-x: hidden;
         }
 
-        /* Navbar */
+        /* ===== NAVBAR ===== */
         nav {
             display: flex;
             justify-content: space-between;
@@ -25,13 +26,27 @@
             width: 100%;
             top: 0;
             z-index: 100;
+            animation: slideDown 0.8s ease;
         }
 
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #6366F1;
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
+
+        .logo { font-size: 20px; font-weight: bold; color: #6366F1; }
+
+        .nav-links { display: flex; gap: 12px; align-items: center; }
+
+        .nav-login {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-login:hover { opacity: 1; }
 
         .nav-btn {
             background: #6366F1;
@@ -41,10 +56,23 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
+            transition: all 0.3s;
         }
 
-        /* Hero */
-        
+        .nav-btn:hover { background: #4F46E5; transform: translateY(-2px); }
+
+        /* ===== PARTICLE CANVAS ===== */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== HERO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -54,6 +82,8 @@
             text-align: center;
             padding: 100px 24px 60px;
             background: radial-gradient(ellipse at top, #1a1a3e 0%, #0F0F1A 70%);
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge {
@@ -65,6 +95,7 @@
             font-size: 13px;
             margin-bottom: 24px;
             display: inline-block;
+            animation: fadeInUp 1s ease 0.3s both;
         }
 
         .hero h1 {
@@ -75,6 +106,8 @@
             background: linear-gradient(135deg, #fff 0%, #6366F1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease 0.5s both;
+            min-height: 100px;
         }
 
         .hero p {
@@ -83,6 +116,7 @@
             max-width: 500px;
             line-height: 1.6;
             margin-bottom: 36px;
+            animation: fadeInUp 1s ease 0.7s both;
         }
 
         .hero-buttons {
@@ -92,6 +126,7 @@
             width: 100%;
             max-width: 300px;
             align-items: center;
+            animation: fadeInUp 1s ease 0.9s both;
         }
 
         .btn-primary {
@@ -104,7 +139,10 @@
             text-decoration: none;
             text-align: center;
             transition: all 0.3s;
+            width: 100%;
         }
+
+        .btn-primary:hover { background: #4F46E5; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(99,102,241,0.3); }
 
         .btn-secondary {
             background: rgba(255,255,255,0.1);
@@ -115,19 +153,84 @@
             font-weight: 600;
             text-decoration: none;
             text-align: center;
+            transition: all 0.3s;
+            width: 100%;
         }
 
-        /* Features */
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        /* ===== STATS COUNTER ===== */
+        .stats-bar {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 40px 24px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #6366F1;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.5;
+            margin-top: 4px;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== FEATURES ===== */
         .features {
             padding: 80px 24px;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
-        .features h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 40px;
-        }
+        .features h2 { font-size: 32px; font-weight: 700; margin-bottom: 40px; }
 
         .features-grid {
             display: grid;
@@ -143,24 +246,114 @@
             border-radius: 16px;
             padding: 24px;
             text-align: left;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #6366F1;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(99,102,241,0.15);
         }
 
         .feature-icon { font-size: 32px; margin-bottom: 12px; }
         .feature-card h3 { font-size: 18px; margin-bottom: 8px; }
         .feature-card p { opacity: 0.6; line-height: 1.6; font-size: 14px; }
 
-        /* Pricing */
-        .pricing {
+        /* ===== HOW IT WORKS ===== */
+        .howitworks {
             padding: 80px 24px;
             text-align: center;
             background: rgba(255,255,255,0.02);
+            position: relative;
+            z-index: 1;
         }
 
-        .pricing h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 40px;
+        .howitworks h2 { font-size: 32px; font-weight: 700; margin-bottom: 50px; }
+
+        .steps-container { max-width: 500px; margin: 0 auto 60px; }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px 24px;
+            text-align: left;
+            transition: all 0.3s;
         }
+
+        .step:hover { border-color: #6366F1; transform: translateX(8px); }
+
+        .step-icon { font-size: 36px; min-width: 50px; }
+        .step h3 { font-size: 17px; margin-bottom: 6px; color: #6366F1; }
+        .step p { font-size: 13px; opacity: 0.6; line-height: 1.5; }
+        .step-arrow { font-size: 24px; opacity: 0.4; margin: 8px 0; text-align: center; }
+
+        /* ===== CHAT DEMO ===== */
+        .chat-demo {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .chat-demo-header {
+            background: #6366F1;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .chat-demo-dot.red { background: #FF5F57; }
+        .chat-demo-dot.yellow { background: #FFBD2E; }
+        .chat-demo-dot.green { background: #28CA41; }
+
+        .chat-demo-messages {
+            padding: 16px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .demo-message {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            max-width: 85%;
+            line-height: 1.5;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .demo-message.bot { background: #6366F1; color: white; align-self: flex-start; }
+        .demo-message.user { background: rgba(255,255,255,0.1); color: white; align-self: flex-end; }
+
+        .chat-demo-input {
+            padding: 12px 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+            opacity: 0.5;
+            min-height: 44px;
+        }
+
+        /* ===== PRICING ===== */
+        .pricing {
+            padding: 80px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing h2 { font-size: 32px; font-weight: 700; margin-bottom: 40px; }
 
         .pricing-grid {
             display: grid;
@@ -175,7 +368,10 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
             padding: 32px 24px;
+            transition: all 0.3s;
         }
+
+        .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
 
         .pricing-card.popular {
             border-color: #6366F1;
@@ -194,260 +390,173 @@
 
         .pricing-card h3 { font-size: 20px; margin-bottom: 12px; }
 
-        .price {
-            font-size: 42px;
-            font-weight: 800;
-            color: #6366F1;
-            margin-bottom: 8px;
-        }
-
+        .price { font-size: 42px; font-weight: 800; color: #6366F1; margin-bottom: 8px; }
         .price span { font-size: 16px; opacity: 0.6; }
 
-        .pricing-features {
-            list-style: none;
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .pricing-features li {
-            padding: 6px 0;
-            opacity: 0.8;
-            font-size: 14px;
-        }
-
+        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+        .pricing-features li { padding: 6px 0; opacity: 0.8; font-size: 14px; }
         .pricing-features li::before { content: "✅ "; }
 
-        /* Footer */
+        /* ===== FOOTER ===== */
         footer {
             padding: 30px 24px;
             text-align: center;
             opacity: 0.5;
             font-size: 13px;
             border-top: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Desktop */
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== DESKTOP ===== */
         @media (min-width: 768px) {
             nav { padding: 20px 60px; }
             .logo { font-size: 24px; }
             .hero h1 { font-size: 64px; }
             .hero p { font-size: 20px; }
             .hero-buttons { flex-direction: row; max-width: none; justify-content: center; }
-            .btn-primary, .btn-secondary { padding: 16px 36px; }
+            .btn-primary, .btn-secondary { padding: 16px 36px; width: auto; }
             .features-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; }
             .pricing-grid { grid-template-columns: repeat(3, 1fr); max-width: 900px; }
             .features { padding: 100px 60px; }
             .pricing { padding: 100px 60px; }
-            .features h2, .pricing h2 { font-size: 42px; }
+            .howitworks { padding: 100px 60px; }
+            .features h2, .pricing h2, .howitworks h2 { font-size: 42px; }
         }
-        /* How It Works */
-.howitworks {
-    padding: 80px 24px;
-    text-align: center;
-    background: rgba(255,255,255,0.02);
-}
-
-.howitworks h2 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 50px;
-}
-
-.steps-container {
-    max-width: 500px;
-    margin: 0 auto 60px;
-}
-
-.step {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 20px 24px;
-    text-align: left;
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 0.6s ease;
-}
-
-.step.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.step-icon {
-    font-size: 36px;
-    min-width: 50px;
-}
-
-.step h3 {
-    font-size: 17px;
-    margin-bottom: 6px;
-    color: #6366F1;
-}
-
-.step p {
-    font-size: 13px;
-    opacity: 0.6;
-    line-height: 1.5;
-}
-
-.step-arrow {
-    font-size: 24px;
-    opacity: 0.4;
-    margin: 8px 0;
-    text-align: center;
-}
-
-/* Chat Demo */
-.chat-demo {
-    max-width: 400px;
-    margin: 0 auto;
-    background: #1a1a2e;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
-
-.chat-demo-header {
-    background: #6366F1;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.chat-demo-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.chat-demo-dot.red { background: #FF5F57; }
-.chat-demo-dot.yellow { background: #FFBD2E; }
-.chat-demo-dot.green { background: #28CA41; }
-
-.chat-demo-messages {
-    padding: 16px;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.demo-message {
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-size: 13px;
-    max-width: 85%;
-    line-height: 1.5;
-    animation: fadeIn 0.5s ease;
-}
-
-.demo-message.bot {
-    background: #6366F1;
-    color: white;
-    align-self: flex-start;
-}
-
-.demo-message.user {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    align-self: flex-end;
-    text-align: right;
-}
-
-.chat-demo-input {
-    padding: 12px 16px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    font-size: 13px;
-    opacity: 0.5;
-    min-height: 44px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@media (min-width: 768px) {
-    .howitworks { padding: 100px 60px; }
-    .howitworks h2 { font-size: 42px; }
-    .steps-container { max-width: 600px; }
-}
     </style>
 </head>
 <body>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Navbar -->
 <nav>
     <div class="logo">🤖 BotBuddy</div>
-    <div style="display:flex; gap:12px; align-items:center;">
-        <a href="login.html" style="color:white; text-decoration:none; font-size:14px; opacity:0.8;">Login</a>
+    <div class="nav-links">
+        <a href="login.html" class="nav-login">Login</a>
         <a href="signup.html" class="nav-btn">Get Started Free</a>
     </div>
 </nav>
 
+<!-- Hero -->
 <section class="hero">
     <div class="hero-badge">🚀 AI Powered Customer Support</div>
-    <h1>Give Your Business<br/>An AI Assistant</h1>
+    <h1 id="typing-text"></h1>
     <p>Create a smart chatbot for your business in minutes. No coding required. Available 24/7.</p>
     <div class="hero-buttons">
         <a href="signup.html" class="btn-primary">Start For Free →</a>
         <a href="#features" class="btn-secondary">See How It Works</a>
     </div>
 </section>
-<!-- How It Works Section -->
-<section class="howitworks" id="howitworks">
-    <h2>How It Works 🎬</h2>
-    <div class="steps-container">
 
-        <div class="step" data-step="1">
+<!-- Stats Counter -->
+<div class="stats-bar">
+    <div class="stat-item reveal">
+        <span class="stat-number" data-target="500">0</span>
+        <span class="stat-label">Businesses Served</span>
+    </div>
+    <div class="stat-item reveal">
+        <span class="stat-number" data-target="10000">0</span>
+        <span class="stat-label">Chats Handled</span>
+    </div>
+    <div class="stat-item reveal">
+        <span class="stat-number" data-target="99">0</span>
+        <span class="stat-label">% Satisfaction</span>
+    </div>
+    <div class="stat-item reveal">
+        <span class="stat-number" data-target="24">0</span>
+        <span class="stat-label">7 Support</span>
+    </div>
+</div>
+
+<!-- Features -->
+<section class="features" id="features">
+    <h2 class="reveal">Everything You Need 🛠️</h2>
+    <div class="features-grid">
+        <div class="feature-card reveal-left">
+            <div class="feature-icon">⚡</div>
+            <h3>Setup in Minutes</h3>
+            <p>Enter your business info and get a fully trained AI chatbot instantly.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Powered</h3>
+            <p>Our AI understands customer questions and gives accurate answers.</p>
+        </div>
+        <div class="feature-card reveal-right">
+            <div class="feature-icon">💬</div>
+            <h3>Easy to Embed</h3>
+            <p>Just paste one line of code on your website and your chatbot is live.</p>
+        </div>
+        <div class="feature-card reveal-left">
+            <div class="feature-icon">📊</div>
+            <h3>Chat History</h3>
+            <p>See all customer conversations in your dashboard.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🌍</div>
+            <h3>24/7 Available</h3>
+            <p>Your AI assistant never sleeps. Always ready for customers.</p>
+        </div>
+        <div class="feature-card reveal-right">
+            <div class="feature-icon">🔐</div>
+            <h3>Secure & Private</h3>
+            <p>Your business data is encrypted and secure always.</p>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="howitworks" id="howitworks">
+    <h2 class="reveal">How It Works 🎬</h2>
+    <div class="steps-container">
+        <div class="step reveal-left" style="margin-bottom:12px;">
             <div class="step-icon">📝</div>
-            <div class="step-content">
+            <div>
                 <h3>1. Enter Your Business Info</h3>
                 <p>Tell us about your business — products, prices, hours, location.</p>
             </div>
         </div>
-      
-
-        <div class="step-arrow">↓</div>
-
-        <div class="step" data-step="2">
+        <div class="step-arrow reveal">↓</div>
+        <div class="step reveal-right" style="margin-bottom:12px;">
             <div class="step-icon">🤖</div>
-            <div class="step-content">
+            <div>
                 <h3>2. AI Trains Instantly</h3>
                 <p>Our AI reads your info and becomes your 24/7 support agent.</p>
             </div>
         </div>
-
-        <div class="step-arrow">↓</div>
-
-        <div class="step" data-step="3">
+        <div class="step-arrow reveal">↓</div>
+        <div class="step reveal-left" style="margin-bottom:12px;">
             <div class="step-icon">💬</div>
-            <div class="step-content">
+            <div>
                 <h3>3. Customers Chat With AI</h3>
-                <p>Your chatbot answers customer questions instantly — day or night!</p>
+                <p>Your chatbot answers customer questions instantly!</p>
             </div>
         </div>
-
-        <div class="step-arrow">↓</div>
-
-        <div class="step" data-step="4">
+        <div class="step-arrow reveal">↓</div>
+        <div class="step reveal-right">
             <div class="step-icon">💰</div>
-            <div class="step-content">
+            <div>
                 <h3>4. You Save Time & Money</h3>
-                <p>No more answering the same questions. Focus on growing your business!</p>
+                <p>No more answering same questions. Focus on growing!</p>
             </div>
         </div>
-
     </div>
 
     <!-- Animated Chat Demo -->
-    <div class="chat-demo">
+    <div class="chat-demo reveal">
         <div class="chat-demo-header">
             <div class="chat-demo-dot red"></div>
             <div class="chat-demo-dot yellow"></div>
@@ -461,48 +570,13 @@
             <span id="demo-typing"></span>
         </div>
     </div>
-
-</section>
-<section class="features" id="features">
-    <h2>Everything You Need 🛠️</h2>
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Setup in Minutes</h3>
-            <p>Enter your business info and get a fully trained AI chatbot instantly.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🤖</div>
-            <h3>AI Powered</h3>
-            <p>Our AI understands customer questions and gives accurate answers.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">💬</div>
-            <h3>Easy to Embed</h3>
-            <p>Just paste one line of code on your website and your chatbot is live.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h3>Chat History</h3>
-            <p>See all customer conversations in your dashboard.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🌍</div>
-            <h3>24/7 Available</h3>
-            <p>Your AI assistant never sleeps. Always ready for customers.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🔐</div>
-            <h3>Secure & Private</h3>
-            <p>Your business data is encrypted and secure always.</p>
-        </div>
-    </div>
 </section>
 
+<!-- Pricing -->
 <section class="pricing" id="pricing">
-    <h2>Simple Pricing 💰</h2>
+    <h2 class="reveal">Simple Pricing 💰</h2>
     <div class="pricing-grid">
-        <div class="pricing-card">
+        <div class="pricing-card reveal-left">
             <h3>Starter</h3>
             <div class="price">$29<span>/mo</span></div>
             <ul class="pricing-features">
@@ -511,9 +585,9 @@
                 <li>Basic analytics</li>
                 <li>Email support</li>
             </ul>
-            <a href="signup.html" class="btn-primary">Get Started</a>
+            <a href="signup.html" class="btn-primary" style="display:block; text-align:center;">Get Started</a>
         </div>
-        <div class="pricing-card popular">
+        <div class="pricing-card popular reveal">
             <div class="popular-badge">⭐ Most Popular</div>
             <h3>Pro</h3>
             <div class="price">$59<span>/mo</span></div>
@@ -523,9 +597,9 @@
                 <li>Advanced analytics</li>
                 <li>Priority support</li>
             </ul>
-            <a href="signup.html" class="btn-primary">Get Started</a>
+            <a href="signup.html" class="btn-primary" style="display:block; text-align:center;">Get Started</a>
         </div>
-        <div class="pricing-card">
+        <div class="pricing-card reveal-right">
             <h3>Enterprise</h3>
             <div class="price">$99<span>/mo</span></div>
             <ul class="pricing-features">
@@ -534,37 +608,137 @@
                 <li>Custom analytics</li>
                 <li>24/7 support</li>
             </ul>
-            <a href="signup.html" class="btn-primary">Get Started</a>
+            <a href="signup.html" class="btn-primary" style="display:block; text-align:center;">Get Started</a>
         </div>
     </div>
 </section>
 
+<!-- Footer -->
 <footer>
     <p>© 2026 BotBuddy — Built with ❤️ by Zain</p>
 </footer>
+
 <script>
-    // Animate steps on scroll
-    const steps = document.querySelectorAll('.step');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+    // ===== PARTICLE BACKGROUND =====
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+
+    for (let i = 0; i < 80; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.5,
+            speedY: (Math.random() - 0.5) * 0.5,
+            opacity: Math.random() * 0.5 + 0.1
+        });
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(99, 102, 241, ${p.opacity})`;
+            ctx.fill();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    // ===== TYPING ANIMATION =====
+    const texts = [
+        "Give Your Business An AI Assistant",
+        "Answer Customers 24/7 Automatically",
+        "Save Time With AI Support"
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingEl = document.getElementById('typing-text');
+
+    function typeText() {
+        const currentText = texts[textIndex];
+        if (isDeleting) {
+            typingEl.innerText = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingEl.innerText = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        if (!isDeleting && charIndex === currentText.length) {
+            setTimeout(() => isDeleting = true, 2000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+        }
+
+        setTimeout(typeText, isDeleting ? 50 : 80);
+    }
+
+    typeText();
+
+    // ===== SCROLL ANIMATIONS =====
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 200);
+                entry.target.classList.add('visible');
             }
         });
-    }, {threshold: 0.1});
+    }, { threshold: 0.1 });
 
-    steps.forEach(step => observer.observe(step));
+    revealEls.forEach(el => revealObserver.observe(el));
 
-    // Animated chat demo
+    // ===== COUNTER ANIMATION =====
+    const counters = document.querySelectorAll('.stat-number');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                let count = 0;
+                const increment = target / 60;
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        entry.target.innerText = target.toLocaleString() + (target === 99 ? '%' : target === 24 ? '/7' : '+');
+                        clearInterval(timer);
+                    } else {
+                        entry.target.innerText = Math.floor(count).toLocaleString();
+                    }
+                }, 30);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+
+    // ===== ANIMATED CHAT DEMO =====
     const demoConversation = [
         {type: "user", text: "How long does delivery take?"},
         {type: "bot", text: "Our delivery takes about 30 minutes! 🍕"},
         {type: "user", text: "What's your most popular pizza?"},
         {type: "bot", text: "Our Pepperoni pizza is the customer favourite! Only $12 😋"},
         {type: "user", text: "Are you open on Sundays?"},
-        {type: "bot", text: "Yes! We're open 9am to 10pm every day including Sundays! 🎉"},
+        {type: "bot", text: "Yes! We're open 9am to 10pm every day! 🎉"},
     ];
 
     let demoIndex = 0;
@@ -597,25 +771,7 @@
     }
 
     setTimeout(addDemoMessage, 2000);
-    function finishBotCreation() {
-    // This makes the success window pop up
-    const modal = document.getElementById('successModal');
-    modal.style.display = 'flex';
-    
-    // Optional: Scroll to top so they see it clearly
-    window.scrollTo(0, 0);
-}
 </script>
-<div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; backdrop-filter: blur(10px); align-items: center; justify-content: center;">
-    <div style="background: #1a1a2e; border: 1px solid #6366F1; padding: 40px; border-radius: 24px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);">
-        <div style="font-size: 60px; margin-bottom: 20px;">🤖</div>
-        <h2 style="font-size: 28px; margin-bottom: 10px; color: white;">Your bot is alive!</h2>
-        <p style="color: rgba(255,255,255,0.7); margin-bottom: 30px; line-height: 1.5;">Great job! Your AI assistant is trained and ready to help your customers.</p>
-        
-        <a href="dashboard.html" style="display: block; width: 100%; background: #6366F1; color: white; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 600; margin-bottom: 12px; transition: 0.3s;">Go to Dashboard</a>
-        
-        <a href="profile.html" style="display: block; width: 100%; background: rgba(255,255,255,0.1); color: white; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);">View Profile</a>
-    </div>
-</div>
+
 </body>
 </html>
